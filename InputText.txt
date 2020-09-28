@@ -1,2 +1,3 @@
-Наименование;Краткое наименование;Дата актуализации;Адрес;Дата основания;Численность сотрудников (employe);Аудитор (auditor);Телефон;Email;Отрасль;Вид деятельности;Адрес страницы в Интернет
+bigcompany;com;1999;Minsk;1980;23;Sasha;5677888;Sashaemail;IT;developer;bigcompanynet
+bigapple;apple;2008;Brest;2005;78;Katya;2335631;Katyaemail;IT;PM;bigapplenet
 
