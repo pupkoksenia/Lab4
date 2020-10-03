@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Scanner;
+import static org.simple.coollection.Coollection.*;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("the name of input file is: " + args[0]);
         System.out.println("the name of output file is: " + args[1]);
 
+        List<Company> secondStep=null;
+        Scanner sc = new Scanner(System.in);
 
         try {
             File myObj = new File("C:\\Users\\Lab4\\InputText.txt");
@@ -26,15 +30,24 @@ public class Main {
             }
 
             List<String> firstStep = readAndMakeListOfLines("InputText.txt");
-            List<Company> secondStep = makeClassesCompany(firstStep);
-            for (Company com : secondStep) {
-                System.out.println(com.Name);
-            }
+            secondStep = makeClassesCompany(firstStep);
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
 
+        for (Company com : secondStep) {
+            System.out.println(com.ToCsv());
+        }
+        System.out.println("----------------------------------------------------------");
+        System.out.print("Write up value of amount of people");
+        int upNumber = sc.nextInt();
+        System.out.print("Write down value of amount of people");
+        int downNumber=sc.nextInt();
+
+        for (Company com : from(secondStep).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye",lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
+            System.out.println(com.ToCsv());
+        }
 
     }
 
@@ -125,6 +138,12 @@ public class Main {
         String Branch;
         String KindOfActivity;
         String AddressInTheInternet;
+
+        public String ToCsv() {
+            return Name+";"+ShortName+";"+ActualDate+";"+Address+";"+FoundDate+";"+AmountOfEmploye
+                    +";"+Auditor+";"+PhoneNumber+";"+Email+";"+Branch+";"+KindOfActivity+";"+AddressInTheInternet;
+
+        }
 
         void addStrings(String Name, String ShortName, String Address, String Auditor, String Email,
                         String Branch, String KindOfActivity, String AddressInTheInternet) {
