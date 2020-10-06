@@ -6,21 +6,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Scanner;
+
 import static org.simple.coollection.Coollection.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("the name of input file is: " + args[0]);
-        System.out.println("the name of output file is: " + args[1]);
-
-        List<Company> secondStep=null;
-        Scanner sc = new Scanner(System.in);
-
         try {
-            File myObj = new File("C:\\Users\\Lab4\\InputText.txt");
+
+            System.out.println("the name of input file is: " + args[0]);
+            System.out.println("the name of output file is: " + args[1]);
+
+            List<Company> arrayOfCompanies = null;
+            Scanner sc = new Scanner(System.in);
+
+
+            File myObj = new File("C:\\Users\\Lab4\\args[0].txt");
 
 
             if (myObj.createNewFile()) {
@@ -29,42 +32,46 @@ public class Main {
                 System.out.println("File already exists.");
             }
 
-            List<String> firstStep = readAndMakeListOfLines("InputText.txt");
-            secondStep = makeClassesCompany(firstStep);
+            List<String> arrayOfLines = readAndMakeListOfLines("InputText.txt");
+            arrayOfCompanies = makeClassesCompany(arrayOfLines);
+
+
+            for (Company com : arrayOfCompanies) {
+                System.out.println(com.ToCsv());
+            }
+            System.out.println("----------------------------------------------------------");
+            System.out.print("Write up value of amount of people");
+            int upNumber = sc.nextInt();
+            System.out.print("Write down value of amount of people");
+            int downNumber = sc.nextInt();
+
+            for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
+                System.out.println(com.ToCsv());
+            }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-
-        for (Company com : secondStep) {
-            System.out.println(com.ToCsv());
-        }
-        System.out.println("----------------------------------------------------------");
-        System.out.print("Write up value of amount of people");
-        int upNumber = sc.nextInt();
-        System.out.print("Write down value of amount of people");
-        int downNumber=sc.nextInt();
-
-        for (Company com : from(secondStep).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye",lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
-            System.out.println(com.ToCsv());
-        }
-
     }
 
     private static List<String> readAndMakeListOfLines(String fileName) throws IOException {
-
         File file = new File(fileName);
         FileReader fr = new FileReader(file);
-        BufferedReader br = new BufferedReader(fr);
-        String line;
+        try (BufferedReader br = new BufferedReader(fr)) {
 
-        List<String> ArrayOfLines = new ArrayList<String>();
-        while ((line = br.readLine()) != null) {
-            ArrayOfLines.add(line);
+            String line;
+
+            List<String> arrayOfLines = new ArrayList<String>();
+            while ((line = br.readLine()) != null) {
+                arrayOfLines.add(line);
+            }
+            br.close();
+            fr.close();
+            return arrayOfLines;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        br.close();
-        fr.close();
-        return ArrayOfLines;
+
+        return null;
     }
 
     public static boolean isDigit(String s) {
@@ -76,37 +83,24 @@ public class Main {
     }
 
 
-    private static List<Company> makeClassesCompany(List<String> ArrayOfLines) {
-        List<Company> Companies = new ArrayList<Company>();
+    private static List<Company> makeClassesCompany(List<String> arrayOfLines) {
+        List<Company> companies = new ArrayList<Company>();
 
-        for (String line : ArrayOfLines) {
-            int beg = 0;
+
+        for (String line : arrayOfLines) {
             List<String> first = new ArrayList<>();
-
-            StringBuilder str = new StringBuilder(line);
-
-            for (int j = 0; j < line.length(); j++) {
-
-                if (line.charAt(j) == ';') {
-                    char[] dst = new char[j - beg];
-                    str.getChars(beg, j, dst, 0);
-                    first.add(String.valueOf(dst));
-                    beg = j + 1;
-
-                }
+            for (String splitLine : line.split(";")) {
+                first.add(splitLine);
             }
-            char[] dst = new char[line.length() - beg];
-            str.getChars(beg, line.length(), dst, 0);
-            first.add(String.valueOf(dst));
-            //first.add(dst.toString());
 
             List<String> second = new ArrayList<>();
             List<Integer> third = new ArrayList<>();
 
             for (String f : first) {
-                if (isDigit(f)) {
+                 if (isDigit(f)) {
                     third.add(Integer.valueOf(f));
-                } else second.add(f);
+                }
+                else second.add(f);
             }
 
 
@@ -115,17 +109,17 @@ public class Main {
             a.addStrings(second.get(0), second.get(1), second.get(2), second.get(3),
                     second.get(4), second.get(5), second.get(6), second.get(7));
 
-            Companies.add(a);
+            companies.add(a);
         }
 
 
-        return Companies;
+        return companies;
 
 
     }
 
 
-    static class Company {
+    private static class Company {
         String Name;
         String ShortName;
         Integer ActualDate;
@@ -140,8 +134,8 @@ public class Main {
         String AddressInTheInternet;
 
         public String ToCsv() {
-            return Name+";"+ShortName+";"+ActualDate+";"+Address+";"+FoundDate+";"+AmountOfEmploye
-                    +";"+Auditor+";"+PhoneNumber+";"+Email+";"+Branch+";"+KindOfActivity+";"+AddressInTheInternet;
+            return Name + ";" + ShortName + ";" + ActualDate + ";" + Address + ";" + FoundDate + ";" + AmountOfEmploye
+                    + ";" + Auditor + ";" + PhoneNumber + ";" + Email + ";" + Branch + ";" + KindOfActivity + ";" + AddressInTheInternet;
 
         }
 
