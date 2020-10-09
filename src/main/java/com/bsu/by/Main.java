@@ -1,14 +1,14 @@
 package com.bsu.by;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static org.simple.coollection.Coollection.*;
 
@@ -23,7 +23,7 @@ public class Main {
             Scanner sc = new Scanner(System.in);
 
 
-            File myObj = new File("C:\\Users\\Lab4\\args[0].txt");
+            File myObj = new File("C:\\Users\\Lab4\\"+args[0]+".txt");
 
 
             if (myObj.createNewFile()) {
@@ -32,7 +32,7 @@ public class Main {
                 System.out.println("File already exists.");
             }
 
-            List<String> arrayOfLines = readAndMakeListOfLines("InputText.txt");
+            List<String> arrayOfLines = readAndMakeListOfLines(args[0]+".txt");
             arrayOfCompanies = makeClassesCompany(arrayOfLines);
 
 
@@ -44,10 +44,32 @@ public class Main {
             int upNumber = sc.nextInt();
             System.out.print("Write down value of amount of people");
             int downNumber = sc.nextInt();
+            File file = new File("C:\\Users\\Lab4\\"+args[1]+".txt");
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
 
+            int CountFound=0;
             for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
-                System.out.println(com.ToCsv());
+                writer.write(com.ToCsv());
+                CountFound++;
+                //System.out.println(com.ToCsv());
             }
+            writer.flush();
+            writer.close();
+
+
+            file = new File("C:\\Users\\Lab4\\logfile.txt");
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fr);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+            bw.write(dateFormat.format( new Date() )+";BetWeen("+downNumber+","+upNumber+");"+CountFound+"\n");
+
+               bw.close();
+            fr.close();
+
+
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -97,10 +119,9 @@ public class Main {
             List<Integer> third = new ArrayList<>();
 
             for (String f : first) {
-                 if (isDigit(f)) {
+                if (isDigit(f)) {
                     third.add(Integer.valueOf(f));
-                }
-                else second.add(f);
+                } else second.add(f);
             }
 
 
