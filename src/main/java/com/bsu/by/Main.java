@@ -1,4 +1,5 @@
 package com.bsu.by;
+import com.bsu.by.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 
 import static org.simple.coollection.Coollection.*;
 
@@ -23,7 +25,7 @@ public class Main {
             Scanner sc = new Scanner(System.in);
 
 
-            File myObj = new File("C:\\Users\\Lab4\\"+args[0]+".txt");
+            File myObj = new File("C:\\Users\\Lab4\\" + args[0] + ".txt");
 
 
             if (myObj.createNewFile()) {
@@ -32,30 +34,88 @@ public class Main {
                 System.out.println("File already exists.");
             }
 
-            List<String> arrayOfLines = readAndMakeListOfLines(args[0]+".txt");
+            List<String> arrayOfLines = readAndMakeListOfLines(args[0] + ".txt");
             arrayOfCompanies = makeClassesCompany(arrayOfLines);
 
 
             for (Company com : arrayOfCompanies) {
-                System.out.println(com.ToCsv());
+                System.out.println(com);
             }
-            System.out.println("----------------------------------------------------------");
-            System.out.print("Write up value of amount of people");
-            int upNumber = sc.nextInt();
-            System.out.print("Write down value of amount of people");
-            int downNumber = sc.nextInt();
-            File file = new File("C:\\Users\\Lab4\\"+args[1]+".txt");
+
+                System.out.println("----------------------------------------------------------");
+                System.out.println("Выберите");
+                System.out.println("0 Выход");
+                System.out.println("1 Найти компанию по краткому наименованию.");
+                System.out.println("2 Выбрать компании по отрасли.");
+                System.out.println("3 Выбрать компании по виду деятельности.");
+                System.out.println("4 Выбрать компании по дате основания в определенном промежутке (с и по).");
+                System.out.println("5 Выбрать компании по численности сотрудников в определенном промежутке (с и по).");
+
+            File file = new File("C:\\Users\\Lab4\\" + args[1] + ".txt");
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
+            int CountFound = 0;
 
-            int CountFound=0;
-            for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
-                writer.write(com.ToCsv());
-                CountFound++;
-                //System.out.println(com.ToCsv());
-            }
+            switch (sc.nextInt()){
+                    case 0:
+                        break;
+                    case 1:
+                        System.out.print("Write ShortName");
+                        String ShortName = sc.next();
+
+                        for (Company com : from(arrayOfCompanies).where("ShortName", eqIgnoreCase(ShortName)).all()) {
+                            writer.write(com.toString());
+                            CountFound++;
+                        }
+                        break;
+                    case 2:
+                        System.out.print("Write Branch");
+                        String Branch = sc.next();
+
+                        for (Company com : from(arrayOfCompanies).where("Branch", eqIgnoreCase(Branch)).all()) {
+                            writer.write(com.toString());
+                            CountFound++;
+                        }
+                        break;
+                    case 3:
+                        System.out.print("Write KindOfActivity");
+                        String KindOfActivity = sc.next();
+
+                        for (Company com : from(arrayOfCompanies).where("KindOfActivity", eqIgnoreCase(KindOfActivity)).all()) {
+                            writer.write(com.toString());
+                            CountFound++;
+                        }
+                        break;
+                    case 4:
+                        System.out.print("Write up value of Founddate");
+                        int upFoundDate = sc.nextInt();
+                        System.out.print("Write down value of Founddate");
+                        int downFoundDate = sc.nextInt();
+
+                        for (Company com : from(arrayOfCompanies).where("FoundDate", greaterThan(downFoundDate)).and("FoundDate", lessThan(upFoundDate)).all()) {
+                            writer.write(com.toString());
+                            CountFound++;
+                        }
+                        break;
+                    case 5:
+                        System.out.print("Write up value of amount of people");
+                        int upNumber = sc.nextInt();
+                        System.out.print("Write down value of amount of people");
+                        int downNumber = sc.nextInt();
+
+                        for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
+                            writer.write(com.toString());
+                            CountFound++;
+                        }
+                        break;
+                }
+
             writer.flush();
             writer.close();
+
+
+
+
 
 
             file = new File("C:\\Users\\Lab4\\logfile.txt");
@@ -63,11 +123,10 @@ public class Main {
             BufferedWriter bw = new BufferedWriter(fr);
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-            bw.write(dateFormat.format( new Date() )+";BetWeen("+downNumber+","+upNumber+");"+CountFound+"\n");
+            bw.write(dateFormat.format(new Date()) + ";" + CountFound + "\n");
 
-               bw.close();
+            bw.close();
             fr.close();
-
 
 
         } catch (IOException e) {
@@ -140,7 +199,8 @@ public class Main {
     }
 
 
-    private static class Company {
+   private static class Company {
+
         String Name;
         String ShortName;
         Integer ActualDate;
@@ -154,11 +214,13 @@ public class Main {
         String KindOfActivity;
         String AddressInTheInternet;
 
-        public String ToCsv() {
+        @Override
+        public String toString() {
             return Name + ";" + ShortName + ";" + ActualDate + ";" + Address + ";" + FoundDate + ";" + AmountOfEmploye
-                    + ";" + Auditor + ";" + PhoneNumber + ";" + Email + ";" + Branch + ";" + KindOfActivity + ";" + AddressInTheInternet;
-
+                    + ";" + Auditor + ";" + PhoneNumber + ";" + Email + ";" + Branch + ";" + KindOfActivity + ";" + AddressInTheInternet+"\n";
         }
+
+
 
         void addStrings(String Name, String ShortName, String Address, String Auditor, String Email,
                         String Branch, String KindOfActivity, String AddressInTheInternet) {
@@ -181,4 +243,5 @@ public class Main {
         }
 
     }
+
 }
