@@ -1,16 +1,13 @@
 package com.bsu.by;
-import com.bsu.by.*;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 
 import static org.simple.coollection.Coollection.*;
 
@@ -42,80 +39,76 @@ public class Main {
                 System.out.println(com);
             }
 
-                System.out.println("----------------------------------------------------------");
-                System.out.println("Выберите");
-                System.out.println("0 Выход");
-                System.out.println("1 Найти компанию по краткому наименованию.");
-                System.out.println("2 Выбрать компании по отрасли.");
-                System.out.println("3 Выбрать компании по виду деятельности.");
-                System.out.println("4 Выбрать компании по дате основания в определенном промежутке (с и по).");
-                System.out.println("5 Выбрать компании по численности сотрудников в определенном промежутке (с и по).");
-
+            System.out.println("----------------------------------------------------------");
+           /* System.out.println("Выберите");
+            System.out.println("0 Выход");
+            System.out.println("1 Найти компанию по краткому наименованию.");
+            System.out.println("2 Выбрать компании по отрасли.");
+            System.out.println("3 Выбрать компании по виду деятельности.");
+            System.out.println("4 Выбрать компании по дате основания в определенном промежутке (с и по).");
+            System.out.println("5 Выбрать компании по численности сотрудников в определенном промежутке (с и по).");
+*/
             File file = new File("C:\\Users\\Lab4\\" + args[1] + ".txt");
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
             int CountFound = 0;
 
-            switch (sc.nextInt()){
-                    case 0:
-                        break;
-                    case 1:
-                        System.out.print("Write ShortName");
-                        String ShortName = sc.next();
+         /*   switch (sc.nextInt()) {
+                case 0:
+                    break;
+                case 1:
+                    System.out.print("Write ShortName");
+                    String ShortName = sc.next();
 
-                        for (Company com : from(arrayOfCompanies).where("ShortName", eqIgnoreCase(ShortName)).all()) {
-                            writer.write(com.toString());
-                            CountFound++;
-                        }
-                        break;
-                    case 2:
-                        System.out.print("Write Branch");
-                        String Branch = sc.next();
+                    for (Company com : from(arrayOfCompanies).where("ShortName", eqIgnoreCase(ShortName)).all()) {
+                        writer.write(com.toString());
+                        CountFound++;
+                    }
+                    break;
+                case 2:
+                    System.out.print("Write Branch");
+                    String Branch = sc.next();
 
-                        for (Company com : from(arrayOfCompanies).where("Branch", eqIgnoreCase(Branch)).all()) {
-                            writer.write(com.toString());
-                            CountFound++;
-                        }
-                        break;
-                    case 3:
-                        System.out.print("Write KindOfActivity");
-                        String KindOfActivity = sc.next();
+                    for (Company com : from(arrayOfCompanies).where("Branch", eqIgnoreCase(Branch)).all()) {
+                        writer.write(com.toString());
+                        CountFound++;
+                    }
+                    break;
+                case 3:
+                    System.out.print("Write KindOfActivity");
+                    String KindOfActivity = sc.next();
 
-                        for (Company com : from(arrayOfCompanies).where("KindOfActivity", eqIgnoreCase(KindOfActivity)).all()) {
-                            writer.write(com.toString());
-                            CountFound++;
-                        }
-                        break;
-                    case 4:
-                        System.out.print("Write up value of Founddate");
-                        int upFoundDate = sc.nextInt();
-                        System.out.print("Write down value of Founddate");
-                        int downFoundDate = sc.nextInt();
+                    for (Company com : from(arrayOfCompanies).where("KindOfActivity", eqIgnoreCase(KindOfActivity)).all()) {
+                        writer.write(com.toString());
+                        CountFound++;
+                    }
+                    break;
+                case 4:
+                    System.out.print("Write up value of Founddate");
+                    int upFoundDate = sc.nextInt();
+                    System.out.print("Write down value of Founddate");
+                    int downFoundDate = sc.nextInt();
 
-                        for (Company com : from(arrayOfCompanies).where("FoundDate", greaterThan(downFoundDate)).and("FoundDate", lessThan(upFoundDate)).all()) {
-                            writer.write(com.toString());
-                            CountFound++;
-                        }
-                        break;
-                    case 5:
-                        System.out.print("Write up value of amount of people");
-                        int upNumber = sc.nextInt();
-                        System.out.print("Write down value of amount of people");
-                        int downNumber = sc.nextInt();
+                    for (Company com : from(arrayOfCompanies).where("FoundDate", greaterThan(downFoundDate)).and("FoundDate", lessThan(upFoundDate)).all()) {
+                        writer.write(com.toString());
+                        CountFound++;
+                    }
+                    break;
+                case 5:
+                    System.out.print("Write up value of amount of people");
+                    int upNumber = sc.nextInt();
+                    System.out.print("Write down value of amount of people");
+                    int downNumber = sc.nextInt();
 
-                        for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
-                            writer.write(com.toString());
-                            CountFound++;
-                        }
-                        break;
-                }
-
-            writer.flush();
-            writer.close();
-
-
-
-
+                    for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
+                        writer.write(com.toString());
+                        CountFound++;
+                    }
+                    break;
+            }
+*/
+            /*writer.flush();
+            writer.close();*/
 
 
             file = new File("C:\\Users\\Lab4\\logfile.txt");
@@ -125,8 +118,54 @@ public class Main {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
             bw.write(dateFormat.format(new Date()) + ";" + CountFound + "\n");
 
-            bw.close();
-            fr.close();
+
+
+            File mySQL = new File("C:\\Users\\Lab4\\requests.txt");
+
+            FileReader frr = new FileReader(mySQL);
+            try (BufferedReader br = new BufferedReader(frr)) {
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+
+
+                    switch (line){
+                        case "SELECT * from company_table where shortName=@shortName":
+                            String ShortName = sc.next();
+                            for (Company com : from(arrayOfCompanies).where("shortName", eqIgnoreCase(ShortName)).all()) {
+                                writer.write(com.toString());
+                                CountFound++;
+                            }
+                            break;
+                        case "SELECT * from company_table order by kindOfActivity":
+                            for (Company com : from(arrayOfCompanies).orderBy("kindOfActivity").all()) {
+                                writer.write(com.toString());
+                                CountFound++;
+                            }
+                            break;
+                        case "SELECT * from company_table  where amountOfEmploye >@start and amountOfEmploye <@end order by amountOfEmploye":
+                            System.out.print("Write up value of amount of people");
+                            int upNumber = sc.nextInt();
+                            System.out.print("Write down value of amount of people");
+                            int downNumber = sc.nextInt();
+
+                            for (Company com : from(arrayOfCompanies).where("amountOfEmploye", greaterThan(downNumber)).and("amountOfEmploye", lessThan(upNumber)).orderBy("amountOfEmploye").all()) {
+                                writer.write(com.toString());
+                                CountFound++;
+                            }
+                            break;
+                    }
+
+                }
+                frr.close();
+                bw.close();
+                fr.close();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            frr.close();
 
 
         } catch (IOException e) {
@@ -199,49 +238,97 @@ public class Main {
     }
 
 
-   private static class Company {
+    private static class Company {
 
-        String Name;
-        String ShortName;
-        Integer ActualDate;
-        String Address;
-        Integer FoundDate;
-        Integer AmountOfEmploye;
-        String Auditor;
-        Integer PhoneNumber;
-        String Email;
-        String Branch;
-        String KindOfActivity;
-        String AddressInTheInternet;
+        private String name;
+        private String shortName;
+        private Integer actualDate;
+        private String address;
+        private Integer foundDate;
+        private Integer amountOfEmploye;
+        private String auditor;
+        private Integer phoneNumber;
+        private String email;
+        private String branch;
+        private String kindOfActivity;
+        private String addressInTheInternet;
+
+        public String getName() {
+            return name;
+        }
+
+        public Integer getActualDate() {
+            return actualDate;
+        }
+
+        public String getShortName() {
+            return shortName;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public Integer getFoundDate() {
+            return foundDate;
+        }
+
+        public Integer getAmountOfEmploye() {
+            return amountOfEmploye;
+        }
+
+        public String getAuditor() {
+            return auditor;
+        }
+
+        public Integer getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public String getAddressInTheInternet() {
+            return addressInTheInternet;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getBranch() {
+            return branch;
+        }
+
+        public String getKindOfActivity() {
+            return kindOfActivity;
+        }
 
         @Override
         public String toString() {
-            return Name + ";" + ShortName + ";" + ActualDate + ";" + Address + ";" + FoundDate + ";" + AmountOfEmploye
-                    + ";" + Auditor + ";" + PhoneNumber + ";" + Email + ";" + Branch + ";" + KindOfActivity + ";" + AddressInTheInternet+"\n";
+            return name + ";" + shortName + ";" + actualDate + ";" + address + ";" + foundDate + ";" + amountOfEmploye
+                    + ";" + auditor + ";" + phoneNumber + ";" + email + ";" + branch + ";" + kindOfActivity + ";" + addressInTheInternet + "\n";
         }
-
 
 
         void addStrings(String Name, String ShortName, String Address, String Auditor, String Email,
                         String Branch, String KindOfActivity, String AddressInTheInternet) {
-            this.Name = Name;
-            this.ShortName = ShortName;
-            this.Address = Address;
-            this.Auditor = Auditor;
-            this.Email = Email;
-            this.Branch = Branch;
-            this.KindOfActivity = KindOfActivity;
-            this.AddressInTheInternet = AddressInTheInternet;
+            this.name = Name;
+            this.shortName = ShortName;
+            this.address = Address;
+            this.auditor = Auditor;
+            this.email = Email;
+            this.branch = Branch;
+            this.kindOfActivity = KindOfActivity;
+            this.addressInTheInternet = AddressInTheInternet;
         }
 
         void addIntegers(Integer ActualDate,
                          Integer FoundDate, Integer AmountOfEmploye, Integer PhoneNumber) {
-            this.ActualDate = ActualDate;
-            this.FoundDate = FoundDate;
-            this.AmountOfEmploye = AmountOfEmploye;
-            this.PhoneNumber = PhoneNumber;
+            this.actualDate = ActualDate;
+            this.foundDate = FoundDate;
+            this.amountOfEmploye = AmountOfEmploye;
+            this.phoneNumber = PhoneNumber;
         }
 
     }
+
 
 }
