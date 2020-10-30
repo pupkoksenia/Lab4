@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
+
             System.out.println("the name of input file is: " + args[0]);
             System.out.println("the name of output file is: " + args[1]);
 
@@ -40,75 +41,11 @@ public class Main {
             }
 
             System.out.println("----------------------------------------------------------");
-           /* System.out.println("Выберите");
-            System.out.println("0 Выход");
-            System.out.println("1 Найти компанию по краткому наименованию.");
-            System.out.println("2 Выбрать компании по отрасли.");
-            System.out.println("3 Выбрать компании по виду деятельности.");
-            System.out.println("4 Выбрать компании по дате основания в определенном промежутке (с и по).");
-            System.out.println("5 Выбрать компании по численности сотрудников в определенном промежутке (с и по).");
-*/
             File file = new File("C:\\Users\\Lab4\\" + args[1] + ".txt");
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
             int CountFound = 0;
 
-         /*   switch (sc.nextInt()) {
-                case 0:
-                    break;
-                case 1:
-                    System.out.print("Write ShortName");
-                    String ShortName = sc.next();
-
-                    for (Company com : from(arrayOfCompanies).where("ShortName", eqIgnoreCase(ShortName)).all()) {
-                        writer.write(com.toString());
-                        CountFound++;
-                    }
-                    break;
-                case 2:
-                    System.out.print("Write Branch");
-                    String Branch = sc.next();
-
-                    for (Company com : from(arrayOfCompanies).where("Branch", eqIgnoreCase(Branch)).all()) {
-                        writer.write(com.toString());
-                        CountFound++;
-                    }
-                    break;
-                case 3:
-                    System.out.print("Write KindOfActivity");
-                    String KindOfActivity = sc.next();
-
-                    for (Company com : from(arrayOfCompanies).where("KindOfActivity", eqIgnoreCase(KindOfActivity)).all()) {
-                        writer.write(com.toString());
-                        CountFound++;
-                    }
-                    break;
-                case 4:
-                    System.out.print("Write up value of Founddate");
-                    int upFoundDate = sc.nextInt();
-                    System.out.print("Write down value of Founddate");
-                    int downFoundDate = sc.nextInt();
-
-                    for (Company com : from(arrayOfCompanies).where("FoundDate", greaterThan(downFoundDate)).and("FoundDate", lessThan(upFoundDate)).all()) {
-                        writer.write(com.toString());
-                        CountFound++;
-                    }
-                    break;
-                case 5:
-                    System.out.print("Write up value of amount of people");
-                    int upNumber = sc.nextInt();
-                    System.out.print("Write down value of amount of people");
-                    int downNumber = sc.nextInt();
-
-                    for (Company com : from(arrayOfCompanies).where("AmountOfEmploye", greaterThan(downNumber)).and("AmountOfEmploye", lessThan(upNumber)).orderBy("AmountOfEmploye").all()) {
-                        writer.write(com.toString());
-                        CountFound++;
-                    }
-                    break;
-            }
-*/
-            /*writer.flush();
-            writer.close();*/
 
 
             file = new File("C:\\Users\\Lab4\\logfile.txt");
